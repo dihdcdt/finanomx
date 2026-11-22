@@ -1,0 +1,45 @@
+# FinAnomX dependencies (Python >= 3.10, enforced by src/00_preflight.py)
+#
+# Derived from a static scan of the import statements in src/, app/ and the
+# vendored third-party code in external/. Exact versions used for the original
+# experiments were not recorded, so versions are left unpinned except where
+# there is direct evidence (noted inline).
+
+# ---- core / config / logging ----
+python-dotenv
+loguru
+
+# ---- data ----
+numpy
+pandas
+pyarrow                 # parquet engine; also a hard check in 00_preflight
+
+# ---- ingestion ----
+yfinance                # market OHLCV (01_ingest_raw)
+fredapi                 # FRED macro series (01_ingest_raw)
+requests                # SEC / GDELT / Ollama HTTP calls
+
+# ---- features / statistics ----
+scikit-learn>=1.7       # saved scalers were produced with scikit-learn 1.7.2
+ruptures                # change-point detection (06_infer_anomalies)
+ta                      # not imported by the pipeline itself, but 00_preflight hard-fails without it
+
+# ---- deep learning ----
+torch                   # PatchTST / TranAD (vendored in external/)
+transformers            # 09_event_grounding
+chronos-forecasting>=2.0  # Amazon Chronos-2 benchmark (04_baselines, model autogluon/chronos-2-small)
+
+# ---- news retrieval ----
+beautifulsoup4
+lxml                    # HTML parser used by BeautifulSoup in 08_news_on_demand
+trafilatura             # article text extraction (08_news_on_demand)
+
+# ---- web app ----
+streamlit
+plotly
+streamlit-plotly-events
+
+# Not required:
+# - dgl: imported by upstream TranAD src/models.py, but FinAnomX installs a stub at runtime.
+# - faiss-cpu, sentence-transformers: only probed as *optional* in 00_preflight (a warning is printed if absent).
+# - Ollama is a separate local server (https://ollama.com), not a pip package.

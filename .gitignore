@@ -1,0 +1,70 @@
+# ---------------------------------------------------------------
+# FinAnomX .gitignore
+# Generated data, models and secrets are never committed.
+# See DATA.md for how to regenerate every excluded artifact.
+# ---------------------------------------------------------------
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets (keep only .env.example)
+.env
+.env.*
+!.env.example
+
+# Editors / OS
+.vscode/
+.idea/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+
+# Logs and run outputs
+/runs/
+*.log
+
+# Pipeline data: market data, news text and generated artifacts
+/data/raw/
+/data/processed/
+/data/results/
+
+# Model checkpoints, scalers and pickles (regenerate with src/02 and src/05)
+# (leading slash: must not match external/PatchTST/PatchTST_supervised/models/)
+/models/
+*.pth
+*.pt
+*.ckpt
+*.pkl
+*.joblib
+
+# Large / binary data formats
+*.parquet
+*.jsonl
+*.zip
+*.npy
+*.npz
+
+# Full third-party repositories: only the verified subset in external/ is tracked
+/external/PatchTST/*
+!/external/PatchTST/LICENSE
+!/external/PatchTST/THIRD_PARTY.md
+!/external/PatchTST/PatchTST_supervised/
+/external/PatchTST/PatchTST_supervised/*
+!/external/PatchTST/PatchTST_supervised/models/
+!/external/PatchTST/PatchTST_supervised/layers/
+/external/TranAD/*
+!/external/TranAD/LICENSE
+!/external/TranAD/THIRD_PARTY.md
+!/external/TranAD/src/
+
+# Academic documents are shared separately (co-author consent required)
+*.docx
+*.pdf
